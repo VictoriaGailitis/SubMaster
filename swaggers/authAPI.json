@@ -1,0 +1,192 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Authentication Service API",
+    "version": "1.0.0",
+    "description": "API for user authentication and authorization including registration, login, and token management.",
+    "contact": {
+      "name": "API Support",
+      "url": "http://www.example.com/support",
+      "email": "support@example.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api/v1",
+      "description": "Development server"
+    }
+  ],
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "UserRegistrationPayload": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8
+          }
+        },
+        "required": ["name", "email", "password"]
+      },
+      "UserLoginPayload": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8
+          }
+        },
+        "$ref":"#/components/schemas/UserRegistrationPayload"
+      },
+      "$ref":"#/components/schemas/UserRegistrationPayload",
+      "$ref":"#/components/schemas/UserLoginPayload",
+      "$ref":"#/components/schemas/TokenResponse"
+    }
+  },
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "Register a new user",
+        "operationId": "registerUser",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref":"#/components/schemas/UserRegistrationPayload" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref":"#/components/schemas/UserResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login user and get access token",
+        "operationId": "loginUser",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref":"#/components/schemas/UserLoginPayload" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": { "type": "string" },
+                    "token_type": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials"
+          },
+          "400": {
+            "description": "Invalid input"
+           }
+         }
+       }
+     },
+
+     "/auth/token/refresh": {
+       "post": {
+         "summary": "Refresh access token",
+       "operationId": "refreshAccessToken",
+       "security": [{ "BearerAuth": [] }],
+       "requestBody": {
+         "required": "true",
+       "content": {
+         "application/json": {
+           "schema": {
+             "type":
+               "object",
+             "properties": {
+               "refresh_token": {
+                 "type":
+                   "string"}
+             }
+           }
+         }
+       }
+       }
+       },
+
+       "responses": {
+         "200": {
+           "description":
+             "Token refreshed successfully",
+             "content": {
+               "application/json": {
+                 "schema": {
+                   "type":
+                     "object",
+                   "properties": {
+                     "access_token": {
+                       "type":
+                         "string" },
+                     "token_type": {
+                       "type":
+                         "string" }
+                   }
+                 }
+               }
+             }
+         },
+         "401": {
+           "description": "Invalid refresh token"},
+         "400": {
+           "description": "Invalid input"}
+     }
+     }
+   }
+}

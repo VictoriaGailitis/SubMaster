@@ -1,0 +1,171 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "User Service API",
+    "version": "1.0.0",
+    "description": "API for managing user accounts including authentication and profile management.",
+    "contact": {
+      "name": "API Support",
+      "url": "http://www.example.com/support",
+      "email": "support@example.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api/v1",
+      "description": "Development server"
+    }
+  ],
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "required": ["id", "name", "email"]
+      },
+      "UserCreatePayload": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8
+          }
+        },
+        "required": ["name", "email", "password"]
+      },
+      "UpdateUserPayload": {
+        "$ref":"#/components/schemas/UserResponse"
+      },
+      "$ref":"#/components/schemas/UserResponse",
+      "$ref":"#/components/schemas/UserCreatePayload"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "Create a new user",
+        "operationId": "createUser",
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref":"#/components/schemas/UserCreatePayload" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": { 
+              "application/json": { 
+                "schema": { "$ref":"#/components/schemas/UserResponse" } 
+              } 
+            }
+          },
+          "400": { 
+            "description": "Invalid input" 
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "summary": "Get a user by ID",
+        "operationId": "getUserById",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { 
+            "name": "user_id", 
+            "in": "path", 
+            "required": true, 
+            "schema": { 
+              "type": "integer" 
+            } 
+          }
+        ],
+        "responses": {
+          "200": { 
+            "description": "User found", 
+            "content": { 
+              "application/json": { 
+                "schema": { "$ref":"#/components/schemas/UserResponse" } 
+              } 
+            } 
+          },
+          "404": { 
+            "description": "User not found" 
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update user name",
+        "operationId": "updateUserName",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "user_id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateUserPayload" } } } },
+
+       "responses": {
+         "200": { "description": "User updated successfully", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UserResponse" } } } },
+         "404": { "description": "User not found" },
+         "400": { "description": "Invalid input" }
+       }
+     },
+      
+     "patch": {
+       "summary": "Update user password",
+       "operationId": "updateUserPassword",
+       "security": [{ "BearerAuth": [] }],
+       "parameters": [
+         { "name": "user_id", "in": "path", "required": true, "schema": { "type": "integer" } }
+       ],
+       "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdatePasswordPayload" } } } },
+
+       "responses": {
+         "200": {
+           "description": "Password updated successfully",
+           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdatePasswordPayload" }}}},
+         "404": { "description": "User not found" },
+         "400": { "description": "Invalid input" }
+       }
+     }
+     }
+   }
+}

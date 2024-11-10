@@ -1,0 +1,235 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Subscriptions API",
+    "version": "1.0.0",
+    "description": "API for managing user subscriptions including creation, retrieval, and notifications.",
+    "contact": {
+      "name": "API Support",
+      "url": "http://www.example.com/support",
+      "email": "support@example.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api/v1",
+      "description": "Development server"
+    }
+  ],
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "SubscriptionResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "float"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "expiration_date": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": ["id", "name", "logo"]
+      },
+      "SubscriptionCreatePayload": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "maxLength": 255 },
+          "logo": { "type": "string" },
+          "description": { "type": "string" },
+          "price": { "type": "number", "format": "float" },
+          "start_date": { "type": "string", "format": "date" },
+          "expiration_date": { "type": "string", "format": "date" }
+        },
+        "required": ["name"]
+      },
+
+      "SubscriptionUpdatePayload": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "maxLength": 255 },
+          "logo": { "type": "string" },
+          "description": { "type": "string" },
+          "price": { "type": "number", "format": "float" },
+          "expiration_date": { "type": "string", "format": "date" }
+        }
+      },
+
+      "SubscriptionNotificationResponse": {
+        "type": "object",
+        "properties": {
+          "logo": { "type": "string" },
+          "days_until_due": { "type": "integer" },
+          "notification_date": { "type": "string", "format": "date" },
+          "service_name": { "type": "string" }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/subscriptions": {
+      "get": {
+        "summary": "Get all subscriptions",
+        "operationId": "getAllSubscriptions",
+        "security": [{ "BearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "List of subscriptions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref":"#/components/schemas/SubscriptionResponse" }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new subscription",
+        "operationId": "createSubscription",
+        "security":[{ "BearerAuth" : [] }],
+        "requestBody":{
+            "required":true,
+            "content":{
+                "application/json":{
+                    "schema":{
+                        "$ref":"#/components/schemas/SubscriptionCreatePayload"
+                    }
+                }
+            }
+        },
+        "responses":{
+            "201":{
+                "description":"Subscription created successfully",
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "$ref":"#/components/schemas/SubscriptionResponse"
+                        }
+                    }
+                }
+            },
+            "400":{
+                "description":"Invalid input"
+            }
+        }
+     },
+
+     "/subscriptions/{subscription_id}": {
+       "get": {
+         "summary": "Get a subscription by ID",
+       "operationId":"getSubscriptionById",
+       "security":[{ "BearerAuth" : [] }],
+       "parameters":[
+         {
+           "name":"subscription_id",
+           "in":"path",
+           "required":true,
+           "schema":{
+             "type":"integer"
+           }
+         }
+       ],
+       "responses":{
+         "200":{
+           "description":"Subscription found",
+           "content":{
+             "application/json":{
+               "schema":{
+                 "$ref":"#/components/schemas/SubscriptionResponse"
+               }
+             }
+           }
+         },
+         "404":{
+           "description":"Subscription not found"
+         },
+         "401":{
+           "description":"Unauthorized"
+         }
+       }},
+     "patch": {
+       "summary": "Update a subscription by ID",
+       "operationId":"updateSubscriptionById",
+       "security":[{ "BearerAuth" : [] }],
+       "parameters":[
+         {
+           "name":"subscription_id",
+           "in":"path",
+           "required":true,
+           "schema":{
+             "type":"integer"
+           }
+         }
+       ],
+       "requestBody":{
+         "required":true,
+         "content":{
+           "application/json":{
+             "schema":{
+               "$ref":"#/components/schemas/SubscriptionUpdatePayload"
+             }
+           }
+         }
+       },
+
+       "responses":{
+         "200":{
+           "description":"Subscription updated successfully",
+           "content":{
+             "application/json":{
+               "schema":{
+                 "$ref":"#/components/schemas/SubscriptionResponse"
+               }
+             }
+           }
+         },
+         "404":{
+           "description":"Subscription not found"
+         },
+         "400":{
+           "description":"Invalid input"
+         }}
+   }
+     }
+    }
+  }
+}
