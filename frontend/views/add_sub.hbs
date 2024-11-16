@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/globals.css" />
+    <link rel="stylesheet" href="css/styleguide.css" />
+    <link rel="stylesheet" href="css/add_sub.css" />
+  </head>
+  <body>
+    <div class="screen">
+      <img class="casual-girl" src="img/casual_man_peace.png" />
+      <div class="navbar">
+        <div class="div">
+          <div class="logo">
+            <a href="/" class="logo">
+                <img class="img" src="img/logo.svg" />
+              <div class="flowbite">SubMaster</div>
+              </a>
+          </div>
+          <div class="nav-links">
+            <div class="link"><div class="text"><a class="text" href="/subscriptions">Мои подписки</a></div></div>
+            <div class="link"><div class="text"><a class="text" href="/foreigns">Зарубежные сервисы</a></div></div>
+          </div>
+          <button class="CTA">
+            <div class="icons-avatar">
+              <img class="img" src="img/bell.svg" />
+              <img class="avatar" src="img/Avatar.png"/>
+            </div>
+           <div class="text-wrapper"><a class="text-wrapper" href="/profile">Николай</a></div>
+          </button>
+        </div>
+      </div>
+      <form action="/addSub" method="POST" enctype="multipart/form-data" class="add-sub-form">
+        <div class="frame-2">
+          <div class="div-wrapper"><div class="text-wrapper-2">Добавить подписку</div></div>
+
+          <div class="input-field">
+            <label for="serviceName" class="input-text label">Название сервиса</label>
+            <input class="input" type="text" id="serviceName" name="name" required placeholder="Введите название сервиса" />
+          </div>
+
+          <div class="file-upload">
+            <label for="logoFile" class="label input-text">Логотип сервиса</label>
+            <input class="file-input" type="file" id="logoFile" name="logo" accept=".png, .jpg, .jpeg" required />
+          </div>
+
+          <div class="input-field-2">
+            <label for="subscriptionPrice" class="input-text label">Стоимость подписки</label>
+            <input class="input" type="number" id="subscriptionPrice" name="price" required placeholder="Введите стоимость ₽"/>
+          </div>
+
+          <div class="input-field-2">
+            <label for="startDate" class="label input-text">Дата начала подписки</label>
+            <input type="date" class="input" id="startDate" name="start_date" required />
+        </div>
+          <div class="frame-3">
+            <label for="durationPeriod" class="input-text label">Период действия</label>
+            <select class="input" style="width: 360px;" id="durationPeriod" name="duration" required>
+              <option value="1">1 месяц</option>
+              <option value="3">3 месяца</option>
+              <option value="6">6 месяцев</option>
+              <option value="12">12 месяцев</option>
+            </select>
+          </div>
+
+          <button type='submit' class='button-2'>
+            <img src='img/check.svg' alt='Добавить' />
+            <div class="text-4">Добавить подписку</div>
+          </button>
+
+        </div>
+      </form>
+      <footer class="footer"><p class="text-wrapper-4">©SubMaster, Москва. Все права защищены</p></footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/globals.css" />
+    <link rel="stylesheet" href="css/styleguide.css" />
+    <link rel="stylesheet" href="css/my_rus_sub.css" />
+  </head>
+  <body>
+    <div class="screen">
+      <div class="navbar">
+        <div class="div">
+          <div class="logo">
+           <a href="/" class="logo">
+                <img class="img" src="img/logo.svg" />
+              <div class="flowbite">SubMaster</div>
+              </a>
+          </div>
+          <div class="nav-links">
+            <div class="link"><div class="text"><a class="text" href="/subscriptions">Мои подписки</a></div></div>
+            <div class="link"><div class="text"><a class="text" href="/foreigns">Зарубежные сервисы</a></div></div>
+          </div>
+          <button class="CTA">
+            <div class="icons-avatar">
+              <img class="bell" src="img/bell.svg" />
+              <img class="avatar" src="img/Avatar.png"/>
+            </div>
+            <div class="text-wrapper"><a class="text-wrapper" href="/profile">Николай</a></div>
+          </button>
+        </div>
+      </div>
+      <div class="frame-2">
+        <div class="div-wrapper"><div class="text-wrapper-2">Моя подписка</div></div>
+        <div class="frame-3">
+          {{#if subscription.added}}
+          <img class="rectangle" src="img/{{subscription.icon}}" />
+          {{else}}
+          <img class="rectangle" src="img/{{subscription.icon}}.png" />
+          {{/if}}
+          <div class="frame-4">
+            <div class="text-wrapper-3">{{subscription.name}}</div>
+            <p class="p">
+              {{subscription.description}}
+            </p>
+          </div>
+        </div>
+        <div class="frame-5">
+          <div class="text-wrapper-4">Мой план:</div>
+          <div class="text-wrapper-5">{{subscription.price}}₽ / {{subscription.month}} месяц</div>
+          <div class="text-wrapper-6">Автопродление недоступно</div>
+        </div>
+        <div class="frame-6">
+          <div class="frame-7">
+            <div class="text-wrapper-4">Дата покупки:</div>
+            <div class="text-wrapper-7">{{subscription.date_begin}}</div>
+          </div>
+          <div class="frame-8">
+            <div class="text-wrapper-4">Дата продления:</div>
+            <div class="text-wrapper-7">{{subscription.date_end}}</div>
+          </div>
+        </div>
+        <button class="button"><div class="text-2"><a class="text-2" href="{{subscription.link}}">Изменить условия</a></div></button>
+      </div>
+      <footer class="footer"><p class="text-wrapper-8">©SubMaster, Москва. Все права защищены</p></footer>
+    </div>
+  </body>
+</html>

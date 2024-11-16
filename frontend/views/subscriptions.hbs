@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/globals.css" />
+    <link rel="stylesheet" href="css/styleguide.css" />
+    <link rel="stylesheet" href="css/subscriptions.css" />
+  </head>
+  <body>
+    <div class="screen">
+      <div class="navbar">
+        <div class="div">
+          <div class="logo">
+            <a href="/" class="logo">
+                <img class="img" src="img/logo.svg" />
+              <div class="flowbite">SubMaster</div>
+              </a>
+          </div>
+          <div class="nav-links">
+            <div class="link"><div class="text"><a class="text" href="/subscriptions">Мои подписки</a></div></div>
+            <div class="link"><div class="text"><a class="text" href="/foreigns">Зарубежные сервисы</a></div></div>
+          </div>
+          <button class="CTA">
+            <div class="icons-avatar">
+              <img class="bell" src="img/bell.svg" />
+              <img class="avatar" src="img/Avatar.png">
+            </div>
+            <div class="text-wrapper"><a class="text-wrapper" href="/profile">Николай</a></div>
+          </button>
+        </div>
+      </div>
+      <div class="frame-2">
+        <div class="frame-3">
+          <div class="frame-4">
+            <div class="text-wrapper-2">Мои подписки</div>
+            <div class="frame-5">
+              <div class="button"><p class="text-2">Выгрузить подписки из истории операций</p></div>
+              <button class="button-2">
+                <img class="plus" src="img/plus.svg" />
+                <div class="text-2"><a class="text-2" href="/addSub">Добавить подписку</a></div>
+              </button>
+            </div>
+          </div>
+          <div class="dropdown-buttons">
+            <button class="button-3">
+              <div class="text-3">Все подписки</div>
+              <img class="img" src="img/chevron-down.svg" />
+            </button>
+          </div>
+        </div>
+        {{#each subs}}
+        <div class="view">
+          <div class="frame-6">
+            <div class="frame-7">
+              {{#if this.auto_renewal}}
+              <a class="frame-7" href="/myForeignSub?name={{this.name}}">
+              {{else}}
+              <a class="frame-7" href="/myRusSub?name={{this.name}}">
+              {{/if}}
+              <img class="rectangle" src="img/{{this.icon}}" />
+              <div class="company-name">{{this.name}}</div></a>
+            </div>
+            <div class="frame-8">
+              <div class="start-date">{{this.date_begin}}</div>
+              <div class="expiration-date">{{this.date_end}}</div>
+            </div>
+          </div>
+          <div class="toggle">
+            {{#if this.auto_renewal}}
+              <input type="checkbox" {{this.auto_renewal}} />
+              <div class="label-helper"><div class="write-label-text">Автопродление</div></div>
+            {{else}}
+              <div class="text-wrapper-3">Автопродление недоступно</div>
+            {{/if}}
+          </div>
+          <div class="price">{{this.price}}₽</div>
+        </div>
+        {{/each}}
+
+        <!-- <div class="pagination">
+          <div class="page-item"><img class="img" src="img/chevron-left.svg" /></div>
+          <div class="page-item-2"><div class="text-4">1</div></div>
+          <div class="page-item-2"><div class="text-4">2</div></div>
+          <div class="page-item-2"><div class="text-4">3</div></div>
+          <div class="page-item-2"><img class="img" src="img/chevron-right.svg" /></div>
+        </div> -->
+      </div>
+      <footer class="footer"><p class="p">©SubMaster, Москва. Все права защищены</p></footer>
+    </div>
+  </body>
+</html>
