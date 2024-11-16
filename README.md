@@ -14,3 +14,4 @@ SubMaster - это веб-сервис для управления подпис�
 1. [Figma](https://www.figma.com/design/rSJHkjz0WyuEBGW7TmKibP/Flowbite-Design-System-(Community)?node-id=1104-1397&node-type=canvas&t=OOJFcDvivCFonDOh-0)
 2. [Видео работы приложения](https://disk.yandex.ru/i/_Vq-AgxUfbUrxQ)
 3. [Презентация](https://disk.yandex.ru/d/K853eA3GLn7jUQ)
+4. [Рабочий прототип](https://submasterfront-production.up.railway.app/)
