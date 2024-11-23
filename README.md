@@ -15,3 +15,4 @@ SubMaster - это веб-сервис для управления подпис�
 2. [Видео работы приложения](https://disk.yandex.ru/i/_Vq-AgxUfbUrxQ)
 3. [Презентация](https://disk.yandex.ru/d/K853eA3GLn7jUQ)
 4. [Рабочий прототип](https://submasterfront-production.up.railway.app/)
+5. [Административная панель](https://submasteradmin-production.up.railway.app/admin)
