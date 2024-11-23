@@ -16,3 +16,4 @@ SubMaster - это веб-сервис для управления подпис�
 3. [Презентация](https://disk.yandex.ru/d/K853eA3GLn7jUQ)
 4. [Рабочий прототип](https://submasterfront-production.up.railway.app/) (логин - example@gmail.com, пароль - example)
 5. [Административная панель](https://submasteradmin-production.up.railway.app/admin) (логин и пароль - admin)
+6. [Телеграм бот](https://t.me/submaster_assistant_bot)
